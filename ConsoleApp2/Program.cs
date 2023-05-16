@@ -43,5 +43,6 @@ internal static class Program
         var outputText = JsonConvert.SerializeObject(output, new StringEnumConverter());
         
         File.WriteAllText(outputFilename, outputText);
+        Console.WriteLine(outputText);
     }
 }

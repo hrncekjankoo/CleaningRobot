@@ -12,6 +12,6 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /App
 COPY --from=build-env /App/out .
-COPY test1.json /App/test1.json
-COPY test2.json /App/test2.json
+COPY test1.json /test1.json
+COPY test2.json /test2.json
 ENTRYPOINT ["dotnet", "ConsoleApp2.dll"]
