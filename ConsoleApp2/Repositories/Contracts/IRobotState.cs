@@ -1,7 +1,6 @@
-﻿using ConsoleApp2.Models;
-using ConsoleApp2.Models.Cells;
+﻿using ConsoleApp2.Models.Cells;
 
-namespace ConsoleApp2.Services.Contracts;
+namespace ConsoleApp2.Repositories.Contracts;
 
 public interface IRobotState
 {

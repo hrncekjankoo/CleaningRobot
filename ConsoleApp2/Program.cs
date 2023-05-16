@@ -1,4 +1,6 @@
 ﻿using ConsoleApp2.Models.Contracts;
+using ConsoleApp2.Repositories;
+using ConsoleApp2.Repositories.Contracts;
 using ConsoleApp2.Services;
 using ConsoleApp2.Services.Contracts;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,15 +11,20 @@ namespace ConsoleApp2;
 
 internal static class Program
 {
-    private static void Main(string[] args)
+    private static void Main(string[]? args)
     {
         var serviceProvider = new ServiceCollection()
             .AddScoped<IRobotService, RobotService>()
-            .AddSingleton<IHistoryService, HistoryService>()
+            .AddSingleton<IHistoryRepository, HistoryRepository>()
             .AddScoped<IActionService, ActionService>()
             .AddSingleton<IRobotState, RobotState>()
             .BuildServiceProvider();
 
+        if (args is {Length: < 2})
+        {
+            throw new ArgumentException("Please provide input and output filenames.");
+        }
+        
         var inputFilename = args[0];
         var outputFilename = args[1];
         

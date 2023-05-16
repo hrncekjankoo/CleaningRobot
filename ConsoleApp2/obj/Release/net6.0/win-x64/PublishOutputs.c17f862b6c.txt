@@ -1,0 +1,3 @@
+C:\Users\jan.hrncir\RiderProjects\ConsoleApp2\ConsoleApp2\bin\Release\net6.0\win-x64\publish\ConsoleApp2.pdb
+C:\Users\jan.hrncir\RiderProjects\ConsoleApp2\ConsoleApp2\bin\Release\net6.0\win-x64\publish\testhost.exe
+C:\Users\jan.hrncir\RiderProjects\ConsoleApp2\ConsoleApp2\bin\Release\net6.0\win-x64\publish\ConsoleApp2.exe

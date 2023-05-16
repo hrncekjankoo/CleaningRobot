@@ -1,23 +1,29 @@
 ﻿using ConsoleApp2.Models;
 using ConsoleApp2.Models.Cells;
+using ConsoleApp2.Repositories.Contracts;
 using ConsoleApp2.Services.Contracts;
 
 namespace ConsoleApp2.Services;
 
 public class ActionService : IActionService
 {
-    private readonly IHistoryService _historyService;
+    private readonly IHistoryRepository _historyRepository;
     private readonly IRobotState _robotState;
 
-    public ActionService(IHistoryService historyService, IRobotState robotState)
+    private const int AdvanceConsumption = 2;
+    private const int BackConsumption = 3;
+    private const int CleanConsumption = 5;
+    private const int TurnConsumption = 1;
+
+    public ActionService(IHistoryRepository historyRepository, IRobotState robotState)
     {
-        _historyService = historyService;
+        _historyRepository = historyRepository;
         _robotState = robotState;
     }
     
     public bool TryTurnLeft()
     {
-        var charged = ConsumeBattery(1);
+        var charged = ConsumeBattery(TurnConsumption);
         if (!charged) return false;
 
         var currentPosition = _robotState.GetPosition();
@@ -36,7 +42,7 @@ public class ActionService : IActionService
 
     public bool TryTurnRight()
     {
-        var charged = ConsumeBattery(1);
+        var charged = ConsumeBattery(TurnConsumption);
         if (!charged) return false;
         
         var currentPosition = _robotState.GetPosition();
@@ -55,10 +61,10 @@ public class ActionService : IActionService
 
     public bool TryClean()
     {
-        var charged = ConsumeBattery(3);
+        var charged = ConsumeBattery(CleanConsumption);
         
         var currentPosition = _robotState.GetPosition();
-        _historyService.AddCleaned(currentPosition);
+        _historyRepository.AddCleaned(currentPosition);
         return charged;
     }
 
@@ -70,7 +76,7 @@ public class ActionService : IActionService
         var currentPosition = _robotState.GetPosition();
         if (isBack)
         {
-            var drainedBatteryForBackAction = ConsumeBattery(3);
+            var drainedBatteryForBackAction = ConsumeBattery(BackConsumption);
             if (!drainedBatteryForBackAction) return false;
             
             var canMoveBack = currentPosition switch
@@ -93,7 +99,7 @@ public class ActionService : IActionService
             return canMoveBack;
         }
 
-        var drainedBatteryForAdvanceAction = ConsumeBattery(2);
+        var drainedBatteryForAdvanceAction = ConsumeBattery(AdvanceConsumption);
         if (!drainedBatteryForAdvanceAction) return false;
         
         var canMoveAdvance =  currentPosition switch
@@ -135,7 +141,7 @@ public class ActionService : IActionService
                 break;
         }
         
-        _historyService.AddVisited(currentPosition);
+        _historyRepository.AddVisited(currentPosition);
         _robotState.SetPosition(currentPosition);
     }
     
@@ -158,7 +164,7 @@ public class ActionService : IActionService
                 break;
         }
         
-        _historyService.AddVisited(currentPosition);
+        _historyRepository.AddVisited(currentPosition);
         _robotState.SetPosition(currentPosition);
     }
     

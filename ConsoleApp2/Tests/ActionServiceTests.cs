@@ -1,5 +1,6 @@
 ﻿using ConsoleApp2.Models;
 using ConsoleApp2.Models.Cells;
+using ConsoleApp2.Repositories;
 using ConsoleApp2.Services;
 using Xunit;
 
@@ -9,7 +10,7 @@ public class ActionServiceTests
 {
     private ActionService _actionService = null!;
     private RobotState _robotState = null!;
-    private HistoryService _historyService = null!;
+    private HistoryRepository _historyRepository = null!;
     
     [Fact]
     public void TurnLeftWithSuccessfully()
@@ -165,9 +166,9 @@ public class ActionServiceTests
 
     private void InitializeServices()
     {
-        _historyService = new HistoryService();
+        _historyRepository = new HistoryRepository();
         _robotState = new RobotState();
-        _actionService = new ActionService(_historyService, _robotState);
+        _actionService = new ActionService(_historyRepository, _robotState);
     }
 
     private static CellStatus?[,] GetMap()

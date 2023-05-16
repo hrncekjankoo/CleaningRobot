@@ -1,6 +1,7 @@
 ﻿using ConsoleApp2.Models;
 using ConsoleApp2.Models.Cells;
 using ConsoleApp2.Models.Contracts;
+using ConsoleApp2.Repositories.Contracts;
 using ConsoleApp2.Services.Contracts;
 
 namespace ConsoleApp2.Services;
@@ -8,10 +9,10 @@ namespace ConsoleApp2.Services;
 public class RobotService : IRobotService
 {
     private readonly IActionService _actionService;
-    private readonly IHistoryService _historyService;
+    private readonly IHistoryRepository _historyService;
     private readonly IRobotState _robotState;
 
-    public RobotService(IActionService actionService, IHistoryService historyService, IRobotState robotState)
+    public RobotService(IActionService actionService, IHistoryRepository historyService, IRobotState robotState)
     {
         _actionService = actionService;
         _historyService = historyService;

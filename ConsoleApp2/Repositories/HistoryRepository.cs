@@ -1,10 +1,9 @@
-﻿using ConsoleApp2.Models;
-using ConsoleApp2.Models.Cells;
-using ConsoleApp2.Services.Contracts;
+﻿using ConsoleApp2.Models.Cells;
+using ConsoleApp2.Repositories.Contracts;
 
-namespace ConsoleApp2.Services;
+namespace ConsoleApp2.Repositories;
 
-public class HistoryService : IHistoryService
+public class HistoryRepository : IHistoryRepository
 {
     private readonly HashSet<Cell> _visited = new();
     private readonly HashSet<Cell> _cleaned = new();
